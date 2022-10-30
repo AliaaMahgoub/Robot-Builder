@@ -1,0 +1,275 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Robot Builder - Aliaa Mahgoub</title>
+		<style>
+			body
+			{
+				text-align:center;
+        background-color:#101821;
+        font-family: "Monaco", monospace;
+			}
+      h1
+      {
+        font-weight:bold;
+        color:white;
+      }
+      h2
+      {
+        background-color: #B0C5DD;
+        color:#101821;
+      }
+      a
+      {
+        color:#FED766;
+      }
+      p
+      {
+        color:#B0C5DD;
+      }
+      button
+      {
+        color: #101821;
+        background-color:white;
+        border: none;
+        border-radius: 4px;
+        font-size: 110%;
+      }
+      button:hover
+      {
+        background-color: #B0C5DD;
+      }
+      button:active
+      {
+        background-color: #67A0E0;
+      }
+			.left-controls
+			{
+				width:25%;
+				float:left;
+			}
+			.right-controls
+			{
+				width:25%;
+				float:right;
+			}
+			table
+			{
+        font-size:150%;
+				margin: 0 auto;
+        color:white;
+			}
+			.robot-display
+			{
+        border-style:solid;
+        border-color:#B0C5DD;
+        background-color:white;
+				margin:auto;
+        width:40%;
+        height:500px;
+				display:flex;
+				justify-content:center;
+			}
+		</style>
+		<script>
+			function initialize()
+			{
+				powerVal = 0;
+				speedVal = 0;
+				integrityVal = 0;
+				scannerVal = "OFF";
+				defenseVal = "OFF";
+				powerType = "No Power Type Selected";
+        powerLimit = 0;
+        speedLimit = 0;
+        integrityLimit = 0;
+				
+				powerDisp = document.getElementById("power");
+				speedDisp = document.getElementById("speed");
+				integrityDisp = document.getElementById("integrity");
+				scannerDisp = document.getElementById("scanner");
+				defenseDisp = document.getElementById("defense");
+				powerTypeDisp = document.getElementById("power-type");
+        scannerBtnDisp = document.getElementById("scannerBtn");
+        defenseBtnDisp = document.getElementById("defenseBtn");
+        
+        robotImg = document.getElementById("robotImg");
+        buttons = document.querySelectorAll("button");
+			}
+	
+			function power(x)
+			{
+        if (powerVal+x>=0 && powerVal+x<=powerLimit && powerLimit!=0)
+        {
+          powerVal += x;
+  				powerDisp.innerHTML = powerVal;
+        }
+			}
+			
+			function speed(x)
+			{
+				if (speedVal+x>=0 && speedVal+x<=speedLimit && speedLimit!=0)
+				{
+					speedVal += x;
+					speedDisp.innerHTML = speedVal;
+				}
+			}
+			
+			function integrity(x)
+			{
+				if (integrityVal+x>=0 && integrityVal+x<=integrityLimit && integrityLimit!=0)
+				{
+					integrityVal += x;
+					integrityDisp.innerHTML = integrityVal;
+				}
+			}
+			
+			function switchScanner(x)
+			{
+				if (scannerVal=="OFF" && powerLimit!=0)
+        {
+          scannerVal = "ON";
+          scannerBtnDisp.innerHTML = "Off";
+        }
+        else if (powerLimit!=0)
+        {
+          scannerVal = "OFF";
+          scannerBtnDisp.innerHTML = "On";
+        }
+        scannerDisp.innerHTML = scannerVal;
+			}
+			
+			function switchDefense(x)
+			{
+				if (defenseVal=="OFF" && powerLimit!=0)
+        {
+          defenseVal = "ON";
+          defenseBtnDisp.innerHTML = "Off";
+        }
+        else if (powerLimit!=0)
+        {
+          defenseVal = "OFF";
+          defenseBtnDisp.innerHTML = "On";
+        }
+        defenseDisp.innerHTML = defenseVal;
+			}
+			
+			function setPowerType(x)
+			{
+        powerType = x;
+				powerTypeDisp.innerHTML = powerType;
+			}
+
+      function setRobot(x)
+      {
+        robotImg.src = x;
+      }
+
+      function setLimits(p, s, i)
+      {
+        powerLimit = p;
+        speedLimit = s;
+        integrityLimit = i;
+
+        alerts = document.querySelectorAll("p");
+        alerts.forEach(hide);
+
+        if (powerVal > powerLimit)
+        {
+          powerVal = powerLimit;
+          powerDisp.innerHTML = powerVal;
+        }
+        if (speedVal > speedLimit)
+        {
+          speedVal = speedLimit;
+          speedDisp.innerHTML = speedVal;
+        }
+        if (integrityVal > integrityLimit)
+        {
+          integrityVal = integrityLimit;
+          integrityDisp.innerHTML = integrityVal;
+        }
+      }
+
+      function finalize()
+      {
+        buttons.forEach(hide);;
+      }
+
+      function hide(x)
+      {
+        x.style.visibility = "hidden";
+      }
+      
+		</script>
+	</head>
+	
+	<body onload="initialize();">
+		<h1>ROBOT BUILDER</h1>
+		<a href="https://www.vecteezy.com/free-vector/robot">Robot Vectors by Vecteezy</a>
+		<hr / >
+		<div class="left-controls">
+			<h2>Power Level</h2>
+			<table>
+				<tr>
+					<td><button onclick="power(-1);">-</button></td>
+					<td id="power">0</td>
+					<td><button onclick="power(1);">+</button></td>
+				</tr>
+			</table>
+      <p>Please select a power type before adjusting any values.</p>
+			<h2>Top Speed</h2>
+			<table>
+				<tr>
+					<td><button onclick="speed(-1);">-</button></td>
+					<td id="speed">0</td>
+					<td><button onclick="speed(1);">+</button></td>
+				</tr>
+			</table>
+      <p>Please select a power type before adjusting any values.</p>
+			<h2>Structural Integrity</h2>
+			<table>
+				<tr>
+					<td><button onclick="integrity(-1);">-</button></td>
+					<td id="integrity">0</td>
+					<td><button onclick="integrity(1);">+</button></td>
+				</tr>
+			</table>
+      <p>Please select a power type before adjusting any values.</p>
+		</div>
+		<div class="right-controls">
+			<h2>Scanner: <span id="scanner">OFF</span></h2>
+			<button onclick="switchScanner();">Turn <span id="scannerBtn">On</span></button>
+      <p>Please select a power type before adjusting any values.</p>
+			<h2>Defense System: <span id="defense">OFF</span></h2>
+			<button onclick="switchDefense();">Turn <span id="defenseBtn">On</span></button>
+      <p>Please select a power type before adjusting any values.</p>
+			<h2>Power Type: <span id="power-type">No Power Installed</span></h2>
+			<table>
+				<tr>
+					<td><button onclick = "setPowerType('Solar');setLimits(10, 10, 10);">solar</button></td>
+					<td><button onclick = "setPowerType('Hydro');setLimits(8, 12, 10);">hydro</button></td>
+					<td><button onclick = "setPowerType('Nuclear');setLimits(12, 14, 4);">nuclear</button></td>
+				</tr>
+			</table>
+			<hr />
+			<button onclick="finalize();">FINALIZE</button>
+		</div>
+		<div class="robot-display">
+			<img style="width:76%;" id="robotImg" src="">
+		</div>
+		<div class="thumbnails">
+			<table>
+				<tr>
+					<td><button onclick="setRobot('robot-1.png');"><img src="robot-1.png" style="width:30%;"></button></td>
+					<td><button onclick="setRobot('robot-2.png');"><img src="robot-2.png" style="width:30%;"></button></td>
+					<td><button onclick="setRobot('robot-3.png');"><img src="robot-3.png" style="width:30%;"></button></td>
+					<td><button onclick="setRobot('robot-4.png');"><img src="robot-4.png" style="width:30%;"></button></td>
+					<td><button onclick="setRobot('robot-5.png');"><img src="robot-5.png" style="width:30%;"></button></td>
+				</tr>
+			</table>
+		</div>
+		
+	</body>
+</html>
+	
